@@ -1,0 +1,15 @@
+#!/bin/bash
+# sqldevup: SQL Developer Upgrader
+# Fetches the lastest version of SQL Developer (will do) and installs it with dpkg
+# Depends:
+# * `odl` - oracle download utility
+# * `alien` - Utility to work with rpms on debian systems
+echo "Beginning installation/upgrade process of Oracle SQL Developer"
+cd /tmp
+sudo rm -f sqldeveloper*
+odl --accept-license --component sqldev --version 4.2 --os linux --arch na
+echo "Convert the rpm to a deb"
+sudo alien --to-deb -c sqldeveloper-*.rpm
+echo "Installing or upgrading SQL Developer"
+sudo dpkg -i sqldeveloper_*.deb
+echo "All finished."
